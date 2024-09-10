@@ -1,3 +1,3 @@
 # Totalize
 
-Vai ser abalo de+ !!!!
+Vai se abalo d+!!
