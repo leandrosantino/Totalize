@@ -3,6 +3,7 @@ package com.totalize;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JButton;
@@ -11,12 +12,23 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import com.totalize.models.product.Product;
+import com.totalize.models.product.ProductDAO;
 
 public class App {
 
     int i;
 
     public static void main(String[] args) {
+
+        List<Product> products = ProductDAO.getALl();
+        System.out.println(products);
+
+        Product product = new Product(1, "Leandro", "Leandro", 123);
+        System.out.println(product.getId());
+
+    }
+
+    void startWindow() {
         // Cria o frame (janela)
         JFrame frame = new JFrame("Tela Swing Básica");
         frame.setSize(400, 300);
@@ -67,9 +79,6 @@ public class App {
 
         // Torna a janela visível
         frame.setVisible(true);
-
-        Product product = new Product(1, "Leandro", "Leandro", 123);
-        System.out.println(product.getId());
-
     }
+
 }
