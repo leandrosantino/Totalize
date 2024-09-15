@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
+import com.totalize.models.product.Product;
+
 public class App {
 
     int i;
@@ -65,5 +67,9 @@ public class App {
 
         // Torna a janela visível
         frame.setVisible(true);
+
+        Product product = new Product(1, "Leandro", "Leandro", 123);
+        System.out.println(product.getId());
+
     }
 }
