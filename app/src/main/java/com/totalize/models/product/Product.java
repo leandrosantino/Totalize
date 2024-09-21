@@ -7,6 +7,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class Product {
 
+    public Product() {
+    }
+
     private Integer id;
     private String code;
     private String description;

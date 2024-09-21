@@ -14,7 +14,7 @@ public class ProductDAO {
     public static List<Product> getALl() {
         List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT product_id, code, description, price FROM product";
+        String sql = "SELECT product_id, barcode, description, price FROM product";
 
         try (Connection conn = Database.connect();
                 Statement stmt = conn.createStatement();
@@ -23,7 +23,7 @@ public class ProductDAO {
             while (rs.next()) {
                 Product product = new Product(
                         rs.getInt("product_id"),
-                        rs.getString("code"),
+                        rs.getString("barcode"),
                         rs.getString("description"),
                         rs.getInt("price"));
 
