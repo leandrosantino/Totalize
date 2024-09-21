@@ -3,11 +3,9 @@
 
 -- create table product (
 --  product_id integer primary key autoincrement,
---  code integer(13) not null,
+--  barcode integer(13) not null unique,
 --  description varchar(35) not null,
 --  price int not null);
-
-
 
 -- INSERT INTO product (code, description, price) 
 -- VALUES 
@@ -22,7 +20,7 @@
 
 -- create table purchase (
 --     purchase_id integer primary key autoincrement,
---     CPF char(11) not null,
+--     CPF char(11),
 --     total_price integer not null,
 --     purchase_date text not null
 -- );
@@ -38,15 +36,15 @@
 -- Criação da tabela de produtos comprados
 
 
-
 -- CREATE TABLE purchased_products (
 --     product_id INTEGER,
 --     purchase_id INTEGER,
 --     amount INTEGER NOT NULL,
 --     PRIMARY KEY (product_id, purchase_id),
---     FOREIGN KEY (product_id) REFERENCES product(product_id),
---     FOREIGN KEY (purchase_id) REFERENCES purchase(purchase_id)
+--     FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE,
+--     FOREIGN KEY (purchase_id) REFERENCES purchase(purchase_id) ON DELETE CASCADE
 -- );
+
 
 
 -- INSERT INTO purchased_products (product_id, purchase_id, amount) 
