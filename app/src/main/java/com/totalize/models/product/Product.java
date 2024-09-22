@@ -7,10 +7,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class Product {
 
-    private Integer id;
-    private String code;
-    private String description;
-    private Integer price;
+    public Product() {
+    }
+
+    protected Integer id;
+    protected String code;
+    protected String description;
+    protected Integer price;
 
     @Override
     public String toString() {

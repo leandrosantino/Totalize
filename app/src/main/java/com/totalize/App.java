@@ -12,7 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import com.totalize.models.product.Product;
-import com.totalize.models.product.ProductDAO;
+import com.totalize.models.purchase.Purchase;
+import com.totalize.models.purchase.PurchaseDAO;
 
 public class App {
 
@@ -20,11 +21,21 @@ public class App {
 
     public static void main(String[] args) {
 
-        List<Product> products = ProductDAO.getALl();
-        System.out.println(products);
+        // List<Product> products = ProductDAO.getALl();
+        // System.out.println(products);
 
-        Product product = new Product(1, "Leandro", "Leandro", 123);
-        System.out.println(product.getId());
+        System.out.println("\n");
+
+        List<Purchase> purchases = PurchaseDAO.getALl();
+        for (Purchase purchase : purchases) {
+            System.out.println();
+            System.out.println(purchase.getId() + "-" + purchase.getCPF() + "-" + purchase.getDate() + ": "
+                    + purchase.getTotalPrice());
+
+            for (Product product : purchase.getProducts()) {
+                System.out.println(product);
+            }
+        }
 
     }
 
