@@ -10,10 +10,10 @@ public class Product {
     public Product() {
     }
 
-    private Integer id;
-    private String code;
-    private String description;
-    private Integer price;
+    protected Integer id;
+    protected String code;
+    protected String description;
+    protected Integer price;
 
     @Override
     public String toString() {

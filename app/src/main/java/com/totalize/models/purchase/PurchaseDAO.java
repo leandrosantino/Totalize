@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.totalize.infra.Database;
-import com.totalize.models.product.Product;
+import com.totalize.models.product.PurchasedProduct;
 
 public class PurchaseDAO {
 
@@ -18,7 +18,7 @@ public class PurchaseDAO {
 
         String sql = "SELECT purchase_id, CPF, total_price, purchase_date FROM purchase";
 
-        String productsSql = "SELECT PR.* FROM purchased_products as PP INNER JOIN product as PR ON PP.product_id = PR.product_id where purchase_id = (?)";
+        String productsSql = "SELECT PR.*, PP.amount FROM purchased_products as PP INNER JOIN product as PR ON PP.product_id = PR.product_id where purchase_id = (?)";
 
         try {
             Connection conn = Database.connect();
@@ -32,7 +32,7 @@ public class PurchaseDAO {
                 purchase.setTotalPrice(purchaseResultSet.getInt("total_price"));
                 purchase.setDate(purchaseResultSet.getString("purchase_date"));
 
-                List<Product> purchaseProducts = new ArrayList<>();
+                List<PurchasedProduct> purchaseProducts = new ArrayList<>();
 
                 PreparedStatement preparedStmt = conn.prepareStatement(productsSql);
                 preparedStmt.setInt(1, purchase.getId());
@@ -40,11 +40,13 @@ public class PurchaseDAO {
                 ResultSet productsResultSet = preparedStmt.executeQuery();
 
                 while (productsResultSet.next()) {
-                    Product product = new Product(
-                            productsResultSet.getInt("product_id"),
-                            productsResultSet.getString("barcode"),
-                            productsResultSet.getString("description"),
-                            productsResultSet.getInt("price"));
+                    PurchasedProduct product = new PurchasedProduct();
+                    product.setId(productsResultSet.getInt("product_id"));
+                    product.setCode(productsResultSet.getString("barcode"));
+                    product.setDescription(productsResultSet.getString("description"));
+                    product.setPrice(productsResultSet.getInt("price"));
+                    product.setAmount(productsResultSet.getInt("amount"));
+
                     purchaseProducts.add(product);
                 }
 

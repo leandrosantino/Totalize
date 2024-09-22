@@ -29,7 +29,8 @@ public class App {
         List<Purchase> purchases = PurchaseDAO.getALl();
         for (Purchase purchase : purchases) {
             System.out.println();
-            System.out.println(purchase.getId() + "-" + purchase.getCPF() + ": " + purchase.getTotalPrice());
+            System.out.println(purchase.getId() + "-" + purchase.getCPF() + "-" + purchase.getDate() + ": "
+                    + purchase.getTotalPrice());
 
             for (Product product : purchase.getProducts()) {
                 System.out.println(product);

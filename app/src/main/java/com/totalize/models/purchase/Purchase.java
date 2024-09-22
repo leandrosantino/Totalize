@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import com.totalize.models.product.Product;
+import com.totalize.models.product.PurchasedProduct;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class Purchase {
     private String CPF;
     private Integer totalPrice;
     private LocalDateTime date;
-    private List<Product> products;
+    private List<PurchasedProduct> products;
 
     String getDateAsString() {
         return this.date.format(formato);
