@@ -12,7 +12,7 @@ public class PurchasedProduct extends Product {
     public String toString() {
         return "Produto{" +
                 "id=" + this.id +
-                ", code='" + this.code + '\'' +
+                ", barcode='" + this.barcode + '\'' +
                 ", description=" + this.description +
                 ", price=" + this.price +
                 ", amount=" + this.amount +

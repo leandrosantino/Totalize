@@ -11,7 +11,7 @@ public class Product {
     }
 
     protected Integer id;
-    protected String code;
+    protected String barcode;
     protected String description;
     protected Integer price;
 
@@ -19,7 +19,7 @@ public class Product {
     public String toString() {
         return "Produto{" +
                 "id=" + id +
-                ", code='" + code + '\'' +
+                ", barcode='" + barcode + '\'' +
                 ", description=" + description +
                 ", price=" + price +
                 '}';

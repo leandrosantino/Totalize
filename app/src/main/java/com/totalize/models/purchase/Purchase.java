@@ -16,7 +16,7 @@ public class Purchase {
     public Purchase() {
     }
 
-    DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     private Integer id;
     private String CPF;

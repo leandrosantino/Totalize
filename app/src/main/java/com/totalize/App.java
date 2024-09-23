@@ -3,6 +3,9 @@ package com.totalize;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -11,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
-import com.totalize.models.product.Product;
+import com.totalize.models.product.PurchasedProduct;
 import com.totalize.models.purchase.Purchase;
 import com.totalize.models.purchase.PurchaseDAO;
 
@@ -19,23 +22,22 @@ public class App {
 
     int i;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
-        // List<Product> products = ProductDAO.getALl();
-        // System.out.println(products);
+        List<PurchasedProduct> products = new ArrayList<>();
+        var product = new PurchasedProduct();
+        product.setId(1);
+        product.setAmount(5);
+        products.add(product);
 
-        System.out.println("\n");
+        Purchase purchase = new Purchase(
+                null,
+                "12345678909",
+                1999,
+                LocalDateTime.now(),
+                products);
 
-        List<Purchase> purchases = PurchaseDAO.getALl();
-        for (Purchase purchase : purchases) {
-            System.out.println();
-            System.out.println(purchase.getId() + "-" + purchase.getCPF() + "-" + purchase.getDate() + ": "
-                    + purchase.getTotalPrice());
-
-            for (Product product : purchase.getProducts()) {
-                System.out.println(product);
-            }
-        }
+        PurchaseDAO.create(purchase);
 
     }
 

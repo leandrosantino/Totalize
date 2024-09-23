@@ -18,7 +18,7 @@ public class ProductDAO {
         List<Product> products = new ArrayList<>();
 
         // Definindo a query SQL que seleciona todos os produtos
-        String sql = "SELECT product_id, code, description, price FROM product";
+        String sql = "SELECT product_id, barcode, description, price FROM product";
 
         try (Connection conn = Database.connect(); // Estabelece a conexão com o banco de dados
                 Statement stmt = conn.createStatement(); // Cria um objeto Statement para executar a query
@@ -28,7 +28,7 @@ public class ProductDAO {
             while (rs.next()) {
                 Product product = new Product(
                         rs.getInt("product_id"), // Pega o ID do produto
-                        rs.getString("code"), // Pega o código do produto
+                        rs.getString("barcode"), // Pega o código do produto
                         rs.getString("description"), // Pega a descrição do produto
                         rs.getInt("price")); // Pega o preço do produto
 
@@ -47,15 +47,15 @@ public class ProductDAO {
     // Função para criar um novo produto no banco de dados
     public static void createProduct(Product product) {
         // Query SQL para inserir um novo produto no banco de dados
-        String sql = "INSERT INTO product (code, description, price) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO product (barcode, description, price) VALUES (?, ?, ?)";
 
         try (Connection conn = Database.connect(); // Estabelece a conexão com o banco de dados
-             PreparedStatement stmt = conn.prepareStatement(sql)) { // Prepara a query para evitar SQL Injection
+                PreparedStatement stmt = conn.prepareStatement(sql)) { // Prepara a query para evitar SQL Injection
 
             // Define os parâmetros da query (substitui os "?" pelo valores reais)
-            stmt.setString(1, product.getCode());        // Define o código do produto
+            stmt.setString(1, product.getBarcode()); // Define o código do produto
             stmt.setString(2, product.getDescription()); // Define a descrição do produto
-            stmt.setInt(3, product.getPrice());          // Define o preço do produto
+            stmt.setInt(3, product.getPrice()); // Define o preço do produto
 
             // Executa a query para inserir o novo produto
             stmt.executeUpdate();
@@ -69,22 +69,23 @@ public class ProductDAO {
 
     // Função para atualizar um produto no banco de dados
     public static void updateProduct(Product product) {
-        // Query SQL para verificar se já existe outro produto com o mesmo código de barras
-        String checkSql = "SELECT COUNT(*) FROM product WHERE code = ? AND product_id != ?";
+        // Query SQL para verificar se já existe outro produto com o mesmo código de
+        // barras
+        String checkSql = "SELECT COUNT(*) FROM product WHERE barcode = ? AND product_id != ?";
         // Query SQL para atualizar as informações do produto com base no ID
-        String updateSql = "UPDATE product SET code = ?, description = ?, price = ? WHERE product_id = ?";
+        String updateSql = "UPDATE product SET barcode = ?, description = ?, price = ? WHERE product_id = ?";
 
         try (Connection conn = Database.connect(); // Estabelece a conexão com o banco de dados
-             PreparedStatement checkStmt = conn.prepareStatement(checkSql)) { // Prepara a query de verificação
+                PreparedStatement checkStmt = conn.prepareStatement(checkSql)) { // Prepara a query de verificação
 
             // Define os parâmetros para a query de verificação
-            checkStmt.setString(1, product.getCode()); // Código do produto que está sendo atualizado
-            checkStmt.setInt(2, product.getId());      // ID do produto a ser atualizado
-            
+            checkStmt.setString(1, product.getBarcode()); // Código do produto que está sendo atualizado
+            checkStmt.setInt(2, product.getId()); // ID do produto a ser atualizado
+
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
                     try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-                        updateStmt.setString(1, product.getCode());
+                        updateStmt.setString(1, product.getBarcode());
                         updateStmt.setString(2, product.getDescription());
                         updateStmt.setInt(3, product.getPrice());
                         updateStmt.setInt(4, product.getId());
