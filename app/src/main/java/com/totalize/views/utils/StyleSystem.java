@@ -1,12 +1,16 @@
 package com.totalize.views.utils;
 
 import java.awt.Color;
+import java.awt.Font;
 
 public class StyleSystem {
 
+    public static final Font BTN_FONT = new Font("Arial", Font.PLAIN, 12);
+
     public static class Colors extends Color {
 
-        public static final Colors PRIMARY = new Colors(255, 191, 0);
+        public static final Colors PRIMARY = new Colors(0, 0, 0);
+        public static final Colors SECODARY = new Colors(255, 191, 0);
         public static final Colors ERROR = new Colors(255, 64, 0);
 
         public Colors(int r, int g, int b, int a) {

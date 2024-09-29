@@ -1,4 +1,4 @@
-package com.totalize.views.components;
+package com.totalize.views.components.Buttons;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -10,8 +10,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
+
+import org.kordamp.ikonli.Ikon;
+import org.kordamp.ikonli.swing.FontIcon;
 
 import com.totalize.views.utils.RoundBorder;
+import com.totalize.views.utils.StyleSystem;
+import com.totalize.views.utils.StyleSystem.Colors;
 
 import lombok.Setter;
 
@@ -26,10 +32,6 @@ public class Button extends JButton {
     @Setter
     private int padding;
 
-    public void setDimension(int width, int height) {
-        this.setPreferredSize(new Dimension(width, height));
-    }
-
     public Button() {
         super(null, null);
     }
@@ -40,6 +42,7 @@ public class Button extends JButton {
         RoundBorder border = new RoundBorder(borderRadio, borderColor, borderStroke);
         setPadding(padding);
         setBorder(border);
+        setFont(StyleSystem.BTN_FONT);
 
         addMouseListener(new MouseAdapter() {
 
@@ -59,6 +62,47 @@ public class Button extends JButton {
             }
         });
 
+    }
+
+    public Button(String text, int width, int height, ButtonType type, Ikon icon) {
+        this(text);
+        setDimension(width, height);
+        Color bgColor = Colors.BLACK, foreColor = Colors.WHITE, iconColor = Colors.WHITE;
+        switch (type) {
+            case Primary:
+                bgColor = Colors.PRIMARY;
+                break;
+            case Secondary:
+                bgColor = Colors.SECODARY;
+                break;
+            case Emphasis:
+                bgColor = Colors.ERROR;
+                break;
+            default:
+                break;
+        }
+        setBackground(bgColor);
+        setForeground(foreColor);
+        if (icon != null) {
+            setIcon(FontIcon.of(icon, 20, iconColor));
+        }
+        setHorizontalTextPosition(SwingConstants.LEFT);
+    }
+
+    public Button(String text, int width, int height, ButtonType type) {
+        this(text, width, height, type, null);
+    }
+
+    public void setDimension(int width, int height) {
+        this.setPreferredSize(new Dimension(width, height));
+    }
+
+    public void setFontSize(float size) {
+        setFont(getFont().deriveFont(size));
+    }
+
+    public void setFontWeight(int style) {
+        setFont(getFont().deriveFont(style));
     }
 
     @Override

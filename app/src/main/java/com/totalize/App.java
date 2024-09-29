@@ -1,7 +1,8 @@
 package com.totalize;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -9,7 +10,6 @@ import javax.swing.JPanel;
 
 import com.totalize.views.Home;
 import com.totalize.views.components.Header;
-import com.totalize.views.utils.StyleSystem;
 
 public class App {
 
@@ -37,24 +37,22 @@ public class App {
     }
 
     public static void startWindow() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final float FACTOR = 0.85f;
+
         JFrame frame = new JFrame("Tela Swing");
-        frame.setSize(1080, 720);
+        frame.setSize(Math.round(screenSize.width * FACTOR), Math.round(screenSize.height * FACTOR));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel main = new JPanel(new BorderLayout()); // Coniainer Principal
+        // Coniainer Principal
+        JPanel main = new JPanel(new BorderLayout());
 
+        // Components
         Header header = new Header(frame.getWidth());
-        main.add(header, BorderLayout.NORTH);
-
-        JPanel content = new JPanel(new GridLayout(1, 2));
-        main.add(content, BorderLayout.CENTER);
-
         Home home = new Home();
-        content.add(home);
 
-        JPanel rightPanel = new JPanel();
-        rightPanel.setBackground(StyleSystem.Colors.LIGHT_GRAY);
-        content.add(rightPanel);
+        main.add(header, BorderLayout.NORTH);
+        main.add(home, BorderLayout.CENTER);
 
         frame.add(main);
         frame.setVisible(true);
