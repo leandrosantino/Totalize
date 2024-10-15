@@ -8,17 +8,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import com.totalize.views.utils.StyleSystem;
+import com.totalize.views.utils.Style;
 
 public class Header extends JPanel {
 
     public Header(int containerWidth) {
-        setBackground(StyleSystem.Colors.BLACK);
+        setBackground(Style.Colors.BLACK);
         setPreferredSize(new Dimension(containerWidth, 40));
         setLayout(new BorderLayout());
 
         JLabel headerLabel = new JLabel("TOTALIZE", SwingConstants.CENTER);
-        headerLabel.setForeground(StyleSystem.Colors.WHITE);
+        headerLabel.setForeground(Style.Colors.WHITE);
         headerLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         add(headerLabel, BorderLayout.CENTER);

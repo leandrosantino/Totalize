@@ -3,7 +3,7 @@ package com.totalize.views.utils;
 import java.awt.Color;
 import java.awt.Font;
 
-public class StyleSystem {
+public class Style {
 
     public static final Font BTN_FONT = new Font("Arial", Font.PLAIN, 12);
 

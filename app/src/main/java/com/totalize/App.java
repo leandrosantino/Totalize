@@ -46,6 +46,7 @@ public class App {
 
         // Coniainer Principal
         JPanel main = new JPanel(new BorderLayout());
+        // Buy buy = new Buy();
 
         // Components
         Header header = new Header(frame.getWidth());
@@ -53,6 +54,13 @@ public class App {
 
         main.add(header, BorderLayout.NORTH);
         main.add(home, BorderLayout.CENTER);
+
+        // frame.addComponentListener(new ComponentAdapter() {
+        // @Override
+        // public void componentResized(ComponentEvent e) {
+        // buy.teste();
+        // }
+        // });
 
         frame.add(main);
         frame.setVisible(true);

@@ -15,7 +15,7 @@ import com.totalize.views.components.Buttons.Button;
 import com.totalize.views.components.Buttons.ButtonType;
 import com.totalize.views.utils.RoundBorder;
 import com.totalize.views.utils.ScannerListener;
-import com.totalize.views.utils.StyleSystem;
+import com.totalize.views.utils.Style;
 
 public class Home extends JPanel {
     public Home() {
@@ -25,7 +25,7 @@ public class Home extends JPanel {
         JPanel leftPanel = new JPanel();
         JPanel rightPanel = new JPanel();
 
-        rightPanel.setBackground(StyleSystem.Colors.LIGHT_GRAY);
+        rightPanel.setBackground(Style.Colors.LIGHT_GRAY);
 
         add(leftPanel);
         add(rightPanel);

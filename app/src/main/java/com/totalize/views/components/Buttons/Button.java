@@ -16,8 +16,8 @@ import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import com.totalize.views.utils.RoundBorder;
-import com.totalize.views.utils.StyleSystem;
-import com.totalize.views.utils.StyleSystem.Colors;
+import com.totalize.views.utils.Style;
+import com.totalize.views.utils.Style.Colors;
 
 import lombok.Setter;
 
@@ -42,7 +42,7 @@ public class Button extends JButton {
         RoundBorder border = new RoundBorder(borderRadio, borderColor, borderStroke);
         setPadding(padding);
         setBorder(border);
-        setFont(StyleSystem.BTN_FONT);
+        setFont(Style.BTN_FONT);
 
         addMouseListener(new MouseAdapter() {
 
