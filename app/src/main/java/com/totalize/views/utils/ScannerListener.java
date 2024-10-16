@@ -2,10 +2,17 @@ package com.totalize.views.utils;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.function.Consumer;
 
 public class ScannerListener implements KeyListener {
 
     String barCode = "";
+
+    private final Consumer<String> callback;
+
+    public ScannerListener(Consumer<String> callback) {
+        this.callback = callback;
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -14,7 +21,8 @@ public class ScannerListener implements KeyListener {
             this.barCode = this.barCode.concat(pressedKey);
             return;
         }
-        System.out.println(this.barCode);
+
+        this.callback.accept(this.barCode);
         this.barCode = "";
     }
 

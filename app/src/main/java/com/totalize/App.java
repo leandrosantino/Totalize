@@ -1,8 +1,6 @@
 package com.totalize;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -37,11 +35,11 @@ public class App {
     }
 
     public static void startWindow() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        final float FACTOR = 0.85f;
-
         JFrame frame = new JFrame("Tela Swing");
-        frame.setSize(Math.round(screenSize.width * FACTOR), Math.round(screenSize.height * FACTOR));
+        int size = 1210;
+        float p = 0.66f;
+        frame.setSize(size, Math.round(size * p));
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Coniainer Principal

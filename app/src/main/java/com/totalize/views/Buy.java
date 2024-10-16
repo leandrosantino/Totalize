@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -21,8 +20,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.totalize.models.product.Product;
-import com.totalize.models.product.ProductDAO;
 import com.totalize.views.components.ProductTable;
 import com.totalize.views.utils.Style;
 
@@ -62,9 +59,7 @@ public class Buy extends JPanel {
         btnFinalizar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btnFinalizar.setFocusPainted(false); // Remove o foco do botão
 
-        List<Product> dados = ProductDAO.getAll();
-
-        ProductTable model = new ProductTable(dados);
+        ProductTable model = new ProductTable();
 
         tabelaProdutos = new JTable(model);
 

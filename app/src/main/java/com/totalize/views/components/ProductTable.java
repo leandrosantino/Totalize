@@ -1,20 +1,21 @@
 package com.totalize.views.components;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.totalize.models.product.Product;
+import com.totalize.models.product.PurchasedProduct;
 
 public class ProductTable extends AbstractTableModel {
 
-    private List<Product> products;
-    private String[] colunas = { "Descrição", "Preço" };
+    private List<PurchasedProduct> products;
+    private String[] colunas = { "Código", "Descrição", "Qtd.", "Valor" };
 
-    public ProductTable(List<Product> products) {
-        this.products = products;
+    public ProductTable() {
+        products = new ArrayList<>();
     }
 
     @Override
@@ -37,9 +38,22 @@ public class ProductTable extends AbstractTableModel {
         return false; // Não permite edição das células
     }
 
+    public void addItem(PurchasedProduct product) {
+        products.add(product);
+        fireTableRowsInserted(0, products.size() - 1);
+    }
+
+    public List<PurchasedProduct> getList() {
+        return products;
+    }
+
+    public PurchasedProduct getItem(int index) {
+        return products.get(index);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Product product = products.get(rowIndex);
+        PurchasedProduct product = products.get(rowIndex);
 
         Locale brasil = new Locale("pt", "BR");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(brasil);
@@ -47,8 +61,12 @@ public class ProductTable extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0:
-                return product.getDescription();
+                return product.getBarcode();
             case 1:
+                return product.getDescription();
+            case 2:
+                return product.getAmount();
+            case 3:
                 return numberFormat.format(price);
             default:
                 return null;
