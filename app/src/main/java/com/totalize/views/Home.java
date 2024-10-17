@@ -11,6 +11,7 @@ import java.util.Locale;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,6 +24,7 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
 import com.totalize.models.product.Product;
 import com.totalize.models.product.ProductDAO;
 import com.totalize.models.product.PurchasedProduct;
+import com.totalize.views.components.PriceLabelComponent;
 import com.totalize.views.components.ProductTable;
 import com.totalize.views.components.Buttons.Button;
 import com.totalize.views.components.Buttons.ButtonType;
@@ -30,6 +32,8 @@ import com.totalize.views.utils.ScannerListener;
 import com.totalize.views.utils.Style;
 
 public class Home extends JPanel {
+
+    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
     private JPanel leftPanel = new JPanel();
     private JPanel rightPanel = new JPanel();
@@ -41,10 +45,15 @@ public class Home extends JPanel {
     private Border border = new EmptyBorder(10, 10, 10, 10);
 
     private JLabel totalLabel = new JLabel("Total: R$ 0,00");
-    private JLabel descriptionLabel = new JLabel("produto");
+    private JLabel descriptionLabel = new JLabel("Descrição");
 
-    JPanel totalLabelContainer = new JPanel();
-    JPanel descriptionLabelContainer = new JPanel();
+    private JPanel totalLabelContainer = new JPanel();
+    private JPanel descriptionLabelContainer = new JPanel();
+
+    private PriceLabelComponent priceLabelComponent = new PriceLabelComponent("Valor unitário:", "R$ 0,00");
+    private PriceLabelComponent amountLabelComponent = new PriceLabelComponent("Quantidade:", "0");
+    private PriceLabelComponent subtotalLabelComponent = new PriceLabelComponent("Subtotal:", "R$ 0,00");
+    private PriceLabelComponent barcodeLabelComponent = new PriceLabelComponent("Código de barras:", "0000000000");
 
     public Home() {
         setLayout(new GridLayout(1, 2));
@@ -71,33 +80,52 @@ public class Home extends JPanel {
                 return;
             }
 
-            PurchasedProduct purchasedProduct = new PurchasedProduct(product, 1);
+            String input = JOptionPane.showInputDialog(this, "Digite a quantidade de item:", "1");
+
+            Integer amount = 0;
+            while (amount <= 0) {
+                try {
+                    amount = Integer.parseInt(input);
+                    break;
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+            }
+
+            PurchasedProduct purchasedProduct = new PurchasedProduct(product, amount);
             tableModel.addItem(purchasedProduct);
 
             descriptionLabel.setText(product.getDescription());
             totalLabel.setText("Total: " + calculateTotal());
+            priceLabelComponent.getValueLabel().setText(formatToCurrence(product.getPrice()));
+            amountLabelComponent.getValueLabel().setText(amount.toString());
+            subtotalLabelComponent.getValueLabel().setText(formatToCurrence(product.getPrice() * amount));
+            barcodeLabelComponent.getValueLabel().setText(barcode);
         }));
     }
 
-    String calculateTotal() {
+    private String calculateTotal() {
         Integer accumulate = 0;
         for (PurchasedProduct product : tableModel.getList()) {
             accumulate += product.getPrice() * product.getAmount();
         }
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        Float total = Float.parseFloat(accumulate.toString()) / 100f;
+        return formatToCurrence(accumulate);
+    }
+
+    private String formatToCurrence(Integer value) {
+        Float total = Float.parseFloat(value.toString()) / 100f;
         return numberFormat.format(total);
     }
 
     private void createRightPanel() {
 
         totalLabel.setForeground(Style.Colors.BLACK);
-        totalLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        totalLabel.setFont(new Font("Arial", Font.BOLD, 48));
         totalLabel.setMaximumSize(new Dimension(1000, 50));
         totalLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
         descriptionLabel.setForeground(Style.Colors.BLACK);
-        descriptionLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        descriptionLabel.setFont(new Font("Arial", Font.BOLD, 38));
         descriptionLabel.setMaximumSize(new Dimension(1000, 50));
         descriptionLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
@@ -114,7 +142,15 @@ public class Home extends JPanel {
         finalizeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         finalizeButton.setFont(new Font("Arial", Font.PLAIN, 18));
 
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         rightPanel.add(descriptionLabelContainer);
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        rightPanel.add(barcodeLabelComponent);
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+        rightPanel.add(priceLabelComponent);
+        rightPanel.add(amountLabelComponent);
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        rightPanel.add(subtotalLabelComponent);
         rightPanel.add(Box.createVerticalGlue());
         rightPanel.add(totalLabelContainer);
         rightPanel.add(Box.createRigidArea(new Dimension(0, 20)));

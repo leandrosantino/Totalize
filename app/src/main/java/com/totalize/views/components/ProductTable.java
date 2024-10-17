@@ -57,7 +57,10 @@ public class ProductTable extends AbstractTableModel {
 
         Locale brasil = new Locale("pt", "BR");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(brasil);
-        Float price = Float.parseFloat(product.getPrice().toString()) / 100f;
+
+        Integer totalPrice = product.getPrice() * product.getAmount();
+
+        Float price = Float.parseFloat(totalPrice.toString()) / 100f;
 
         switch (columnIndex) {
             case 0:
