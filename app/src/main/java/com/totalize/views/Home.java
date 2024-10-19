@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,7 +29,7 @@ import com.totalize.views.components.PriceLabelComponent;
 import com.totalize.views.components.ProductTable;
 import com.totalize.views.components.Buttons.Button;
 import com.totalize.views.components.Buttons.ButtonType;
-import com.totalize.views.utils.ScannerListener;
+import com.totalize.views.utils.GlobalScannerListener;
 import com.totalize.views.utils.Style;
 
 public class Home extends JPanel {
@@ -49,6 +50,7 @@ public class Home extends JPanel {
 
     private JPanel totalLabelContainer = new JPanel();
     private JPanel descriptionLabelContainer = new JPanel();
+    private Boolean inExecution = false;
 
     private PriceLabelComponent priceLabelComponent = new PriceLabelComponent("Valor unitário:", "R$ 0,00");
     private PriceLabelComponent amountLabelComponent = new PriceLabelComponent("Quantidade:", "0");
@@ -71,12 +73,19 @@ public class Home extends JPanel {
         createLeftPanel();
         createRightPanel();
 
+        Supplier<Boolean> canExecute = () -> {
+            return !inExecution;
+        };
+
         setFocusable(true);
-        addKeyListener(new ScannerListener(barcode -> {
+        // addKeyListener(new ScannerListener());
+        new GlobalScannerListener(barcode -> {
+            inExecution = true;
             System.out.println(barcode);
 
             Product product = ProductDAO.getBybarcode(barcode);
             if (product == null) {
+                ;
                 return;
             }
 
@@ -101,7 +110,8 @@ public class Home extends JPanel {
             amountLabelComponent.getValueLabel().setText(amount.toString());
             subtotalLabelComponent.getValueLabel().setText(formatToCurrence(product.getPrice() * amount));
             barcodeLabelComponent.getValueLabel().setText(barcode);
-        }));
+            inExecution = false;
+        }, canExecute);
     }
 
     private String calculateTotal() {
