@@ -43,6 +43,11 @@ public class ProductTable extends AbstractTableModel {
         fireTableRowsInserted(0, products.size() - 1);
     }
 
+    public void clear() {
+        products.clear();
+        fireTableDataChanged();
+    }
+
     public List<PurchasedProduct> getList() {
         return products;
     }

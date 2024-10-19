@@ -46,7 +46,7 @@ public class Home extends JPanel {
     private Border border = new EmptyBorder(10, 10, 10, 10);
 
     private JLabel totalLabel = new JLabel("Total: R$ 0,00");
-    private JLabel descriptionLabel = new JLabel("Descrição");
+    private JLabel descriptionLabel = new JLabel("--------------");
 
     private JPanel totalLabelContainer = new JPanel();
     private JPanel descriptionLabelContainer = new JPanel();
@@ -55,7 +55,7 @@ public class Home extends JPanel {
     private PriceLabelComponent priceLabelComponent = new PriceLabelComponent("Valor unitário:", "R$ 0,00");
     private PriceLabelComponent amountLabelComponent = new PriceLabelComponent("Quantidade:", "0");
     private PriceLabelComponent subtotalLabelComponent = new PriceLabelComponent("Subtotal:", "R$ 0,00");
-    private PriceLabelComponent barcodeLabelComponent = new PriceLabelComponent("Código de barras:", "0000000000");
+    private PriceLabelComponent barcodeLabelComponent = new PriceLabelComponent("Código de barras:", "--------------");
 
     public Home() {
         setLayout(new GridLayout(1, 2));
@@ -78,22 +78,25 @@ public class Home extends JPanel {
         };
 
         setFocusable(true);
-        // addKeyListener(new ScannerListener());
         new GlobalScannerListener(barcode -> {
             inExecution = true;
             System.out.println(barcode);
 
             Product product = ProductDAO.getBybarcode(barcode);
             if (product == null) {
-                ;
+                JOptionPane.showMessageDialog(this, "Este produto não está cadastrado!");
+                inExecution = false;
                 return;
             }
-
-            String input = JOptionPane.showInputDialog(this, "Digite a quantidade de item:", "1");
 
             Integer amount = 0;
             while (amount <= 0) {
                 try {
+                    String input = JOptionPane.showInputDialog(this, "Digite a quantidade de item:", "1");
+                    if (input == null) {
+                        inExecution = false;
+                        return;
+                    }
                     amount = Integer.parseInt(input);
                     break;
                 } catch (NumberFormatException e) {
@@ -151,6 +154,18 @@ public class Home extends JPanel {
         finalizeButton.setMaximumSize(new Dimension(1000, 50));
         finalizeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         finalizeButton.setFont(new Font("Arial", Font.PLAIN, 18));
+
+        finalizeButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this,
+                    "Compra finalizada com sucesso! \n Aguarde a Emição da nota!");
+            descriptionLabel.setText("--------------");
+            totalLabel.setText("Total: R$ 0,00");
+            priceLabelComponent.getValueLabel().setText("R$ 0,00");
+            amountLabelComponent.getValueLabel().setText("0");
+            subtotalLabelComponent.getValueLabel().setText("R$ 0,00");
+            barcodeLabelComponent.getValueLabel().setText("--------------");
+            tableModel.clear();
+        });
 
         rightPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         rightPanel.add(descriptionLabelContainer);
