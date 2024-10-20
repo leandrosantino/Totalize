@@ -12,8 +12,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.34'
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
     implementation 'org.xerial:sqlite-jdbc:3.46.1.0'
+    implementation 'org.kordamp.ikonli:ikonli-swing:12.3.1'
+    implementation 'org.kordamp.ikonli:ikonli-materialdesign2-pack:12.3.1'
 }
-
 
 java {
     toolchain {
@@ -23,4 +24,8 @@ java {
 
 application {
     mainClass = 'com.totalize.App'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }

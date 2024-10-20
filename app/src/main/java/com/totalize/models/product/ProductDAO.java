@@ -101,4 +101,40 @@ public class ProductDAO {
             System.out.println("Erro ao atualizar produto: " + e.getMessage());
         }
     }
+
+    public static Product getBybarcode(String productId) {
+        // Define o produto que será retornado (pode ser null caso não seja encontrado)
+        Product product = null;
+
+        // Definindo a query SQL com um parâmetro para o ID
+        String sql = "SELECT product_id, barcode, description, price FROM product WHERE barcode = ?";
+
+        try (Connection conn = Database.connect(); // Estabelece a conexão com o banco de dados
+                PreparedStatement pstmt = conn.prepareStatement(sql)) { // Usa PreparedStatement para evitar injeção de
+                                                                        // SQL
+
+            // Define o valor do parâmetro (id) na query
+            pstmt.setString(1, productId);
+
+            // Executa a query e armazena o resultado em ResultSet
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                // Verifica se houve algum resultado
+                if (rs.next()) {
+                    // Cria o objeto Product com os dados do resultado
+                    product = new Product(
+                            rs.getInt("product_id"), // Pega o ID do produto
+                            rs.getString("barcode"), // Pega o código de barras
+                            rs.getString("description"), // Pega a descrição do produto
+                            rs.getInt("price")); // Pega o preço do produto
+                }
+            }
+        } catch (SQLException e) {
+            // Caso ocorra um erro durante a execução da query, ele será impresso aqui
+            System.out.println(e.getMessage());
+        }
+
+        // Retorna o produto encontrado ou null se não houver correspondência
+        return product;
+    }
 }

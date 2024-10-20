@@ -8,6 +8,14 @@ public class PurchasedProduct extends Product {
     @Getter
     private Integer amount;
 
+    public PurchasedProduct(Product product, Integer amount) {
+        super(product.getId(), product.getBarcode(), product.getDescription(), product.getPrice());
+        this.amount = amount;
+    }
+
+    public PurchasedProduct() {
+    }
+
     @Override
     public String toString() {
         return "Produto{" +

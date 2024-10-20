@@ -15,6 +15,12 @@ public class Product {
     protected String description;
     protected Integer price;
 
+    public Product(String barcode, String description, Integer price) {
+        this.barcode = barcode;
+        this.description = description;
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Produto{" +
