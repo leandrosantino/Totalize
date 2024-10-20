@@ -43,6 +43,13 @@ public class ProductTable extends AbstractTableModel {
         fireTableRowsInserted(0, products.size() - 1);
     }
 
+    public void removeItem(int index) {
+        if (index >= 0 && index < products.size()) {
+            products.remove(index);
+            fireTableRowsDeleted(index, index);
+        }
+    }
+
     public void clear() {
         products.clear();
         fireTableDataChanged();

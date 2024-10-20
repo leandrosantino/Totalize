@@ -21,6 +21,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignD;
 
 import com.totalize.models.product.Product;
 import com.totalize.models.product.ProductDAO;
@@ -156,6 +157,16 @@ public class Home extends JPanel {
         finalizeButton.setFont(new Font("Arial", Font.PLAIN, 18));
 
         finalizeButton.addActionListener(e -> {
+
+            if (tableModel.getList().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nenhum produto foi registrado!");
+                return;
+            }
+
+            if (JOptionPane.showConfirmDialog(this, "Realmente deseja finalizar a Compra?") > 0) {
+                return;
+            }
+
             JOptionPane.showMessageDialog(this,
                     "Compra finalizada com sucesso! \n Aguarde a Emição da nota!");
             descriptionLabel.setText("--------------");
@@ -187,14 +198,14 @@ public class Home extends JPanel {
 
         JLabel title = new JLabel("Produtos", SwingConstants.LEFT);
         title.setForeground(Style.Colors.BLACK);
-        title.setFont(new Font("Arial", Font.BOLD, 28));
+        title.setFont(new Font("Arial", Font.BOLD, 22));
 
-        JPanel titleContainer = new JPanel();
-        titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.LINE_AXIS));
-        titleContainer.setBorder(border);
-        titleContainer.add(title);
-        titleContainer.setBackground(Style.Colors.LIGHT_GRAY);
-        titleContainer.setPreferredSize(new Dimension(500, 50));
+        // JPanel titleContainer = new JPanel();
+        // titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.LINE_AXIS));
+        // titleContainer.setBorder(border);
+        // titleContainer.add(title);
+        // titleContainer.setBackground(Style.Colors.LIGHT_GRAY);
+        // titleContainer.setPreferredSize(new Dimension(500, 50));
 
         productTable.getColumnModel().getColumn(1).setPreferredWidth(300);
         productTable.getTableHeader().setResizingAllowed(false);
@@ -209,7 +220,33 @@ public class Home extends JPanel {
         productTable.setFont(new Font("Arial", Font.PLAIN, 14));
         productTable.setFillsViewportHeight(true);
 
-        leftPanel.add(titleContainer);
+        Button removeButton = new Button("Remover", 90, 25, ButtonType.Emphasis, MaterialDesignD.DELETE);
+        removeButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        removeButton.setMaximumSize(new Dimension(90, 50));
+        removeButton.setFont(new Font("Arial", Font.BOLD, 11));
+
+        removeButton.addActionListener(e -> {
+            int selectedRow = productTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um item antes de remover!");
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(this, "Realmente deseja remover este item?") > 0) {
+                return;
+            }
+            tableModel.removeItem(selectedRow);
+            JOptionPane.showMessageDialog(this, "Item removido!");
+        });
+
+        JPanel buttonContainer = new JPanel();
+        buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.X_AXIS));
+        buttonContainer.add(title);
+        buttonContainer.add(Box.createHorizontalGlue());
+        buttonContainer.add(removeButton);
+        buttonContainer.setBackground(Style.Colors.LIGHT_GRAY);
+
+        // leftPanel.add(titleContainer);
+        leftPanel.add(buttonContainer);
         leftPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         leftPanel.add(scrollPaneTabela);
     }
