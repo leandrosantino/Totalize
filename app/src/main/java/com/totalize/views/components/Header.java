@@ -46,6 +46,7 @@ public class Header extends JPanel {
             navigate.execute();
             buttonPanel.remove(productsButton);
             buttonPanel.add(homeButton);
+            homeButton.setBackground(Style.Colors.ERROR);
             buttonPanel.revalidate();
             buttonPanel.repaint();
         });
@@ -54,6 +55,7 @@ public class Header extends JPanel {
             navigate.execute();
             buttonPanel.remove(homeButton);
             buttonPanel.add(productsButton);
+            productsButton.setBackground(Style.Colors.SECODARY);
             buttonPanel.revalidate();
             buttonPanel.repaint();
         });
