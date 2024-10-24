@@ -200,13 +200,6 @@ public class Home extends JPanel {
         title.setForeground(Style.Colors.BLACK);
         title.setFont(new Font("Arial", Font.BOLD, 22));
 
-        // JPanel titleContainer = new JPanel();
-        // titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.LINE_AXIS));
-        // titleContainer.setBorder(border);
-        // titleContainer.add(title);
-        // titleContainer.setBackground(Style.Colors.LIGHT_GRAY);
-        // titleContainer.setPreferredSize(new Dimension(500, 50));
-
         productTable.getColumnModel().getColumn(1).setPreferredWidth(300);
         productTable.getTableHeader().setResizingAllowed(false);
         productTable.getTableHeader().setReorderingAllowed(false);

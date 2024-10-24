@@ -94,7 +94,9 @@ public class Button extends JButton {
     }
 
     public void setDimension(int width, int height) {
-        this.setPreferredSize(new Dimension(width, height));
+        Dimension dimension = new Dimension(width, height);
+        this.setPreferredSize(dimension);
+        this.setMaximumSize(dimension);
     }
 
     public void setFontSize(float size) {
