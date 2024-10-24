@@ -7,10 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.totalize.views.Home;
+import com.totalize.views.ProductsView;
 import com.totalize.views.components.Header;
 
 public class App {
 
+    private static final JPanel home = new Home();
+    private static final ProductsView products = new ProductsView();
     int i;
 
     public static void main(String[] args) throws SQLException {
@@ -25,23 +28,23 @@ public class App {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Coniainer Principal
         JPanel main = new JPanel(new BorderLayout());
-        // Buy buy = new Buy();
 
-        // Components
-        Header header = new Header(frame.getWidth());
-        Home home = new Home();
+        Header header = new Header(frame.getWidth(), () -> {
+
+            if (main.isAncestorOf(home)) {
+                main.remove(home);
+                main.add(products);
+            } else {
+                main.remove(products);
+                main.add(home);
+            }
+            main.revalidate();
+            main.repaint();
+        });
 
         main.add(header, BorderLayout.NORTH);
         main.add(home, BorderLayout.CENTER);
-
-        // frame.addComponentListener(new ComponentAdapter() {
-        // @Override
-        // public void componentResized(ComponentEvent e) {
-        // buy.teste();
-        // }
-        // });
 
         frame.add(main);
         frame.setVisible(true);
