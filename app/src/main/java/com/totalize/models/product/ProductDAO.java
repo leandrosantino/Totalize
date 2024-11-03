@@ -137,4 +137,28 @@ public class ProductDAO {
         // Retorna o produto encontrado ou null se não houver correspondência
         return product;
     }
+
+    // Função para excluir um produto do banco de dados
+    public static void deleteProduct(int productId) {
+        String sql = "DELETE FROM product WHERE product_id = ?";
+    
+        try (Connection conn = Database.connect(); // Estabelece a conexão com o banco de dados
+             PreparedStatement stmt = conn.prepareStatement(sql)) { // Prepara a query
+    
+            stmt.setInt(1, productId); // Define o ID do produto a ser excluído
+            int linhasAfetadas = stmt.executeUpdate(); // Executa a operação de exclusão
+    
+            // Verifica se alguma linha foi afetada
+            if (linhasAfetadas > 0) {
+                System.out.println("Produto excluído com sucesso.");
+            } else {
+                System.out.println("Nenhum produto encontrado com o ID fornecido.");
+            }
+    
+        } catch (SQLException e) {
+            // Mensagem de erro, se a operação falhar
+            System.err.println("Erro ao excluir o produto: " + e.getMessage());
+        }
+    }
+    
 }
