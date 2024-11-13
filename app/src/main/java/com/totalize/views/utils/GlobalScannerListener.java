@@ -31,7 +31,7 @@ public class GlobalScannerListener {
                 String barcode = barCodeBuilder.toString();
                 barCodeBuilder.setLength(0);
 
-                if (barcode.length() > 0 && canExecute.get()) {
+                if (!barcode.isEmpty() && canExecute.get()) {
                     callback.accept(barcode);
                 }
             }

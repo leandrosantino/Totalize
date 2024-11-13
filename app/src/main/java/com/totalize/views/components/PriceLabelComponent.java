@@ -1,5 +1,7 @@
 package com.totalize.views.components;
 
+import lombok.Getter;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -10,10 +12,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+@Getter
 public class PriceLabelComponent extends JPanel {
 
-    private JLabel descLabel;
-    private JLabel valueLabel;
+    // Getters para acessar os labels externamente, se necessário
+    private final JLabel descLabel;
+    private final JLabel valueLabel;
 
     public PriceLabelComponent(String description, String price) {
         // Configuração do JPanel com BoxLayout no eixo X
@@ -39,12 +43,4 @@ public class PriceLabelComponent extends JPanel {
         this.add(valueLabel);
     }
 
-    // Getters para acessar os labels externamente, se necessário
-    public JLabel getDescLabel() {
-        return descLabel;
-    }
-
-    public JLabel getValueLabel() {
-        return valueLabel;
-    }
 }

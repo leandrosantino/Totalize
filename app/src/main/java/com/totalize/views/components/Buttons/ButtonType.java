@@ -6,5 +6,7 @@ public enum ButtonType {
     // Amarelo
     Secondary,
     // Vermelho
-    Emphasis
+    Emphasis,
+
+    Success
 }

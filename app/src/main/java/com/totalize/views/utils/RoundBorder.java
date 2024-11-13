@@ -14,9 +14,9 @@ import javax.swing.border.Border;
 import lombok.Setter;
 
 public class RoundBorder implements Border {
-    private int radio;
-    private Color borderColor;
-    private float stroke;
+    private final int radio;
+    private final Color borderColor;
+    private final float stroke;
 
     @Setter
     private int padding = 6;

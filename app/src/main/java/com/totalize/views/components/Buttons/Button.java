@@ -21,15 +21,12 @@ import com.totalize.views.utils.Style.Colors;
 
 import lombok.Setter;
 
+@Setter
 public class Button extends JButton {
 
-    @Setter
     private int borderRadio = 10;
-    @Setter
     private float borderStroke = 0;
-    @Setter
     private Color borderColor;
-    @Setter
     private int padding;
 
     public Button() {
@@ -73,10 +70,13 @@ public class Button extends JButton {
                 bgColor = Colors.PRIMARY;
                 break;
             case Secondary:
-                bgColor = Colors.SECODARY;
+                bgColor = Colors.SECONDARY;
                 break;
             case Emphasis:
                 bgColor = Colors.ERROR;
+                break;
+            case Success:
+                bgColor = new Color(34,139,34);
                 break;
             default:
                 break;

@@ -10,12 +10,8 @@ public class Style {
     public static class Colors extends Color {
 
         public static final Colors PRIMARY = new Colors(0, 0, 0);
-        public static final Colors SECODARY = new Colors(255, 191, 0);
+        public static final Colors SECONDARY = new Colors(255, 191, 0);
         public static final Colors ERROR = new Colors(255, 64, 0);
-
-        public Colors(int r, int g, int b, int a) {
-            super(r, g, b, a);
-        }
 
         public Colors(int r, int g, int b) {
             super(r, g, b);

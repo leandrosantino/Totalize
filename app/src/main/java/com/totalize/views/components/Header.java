@@ -55,7 +55,7 @@ public class Header extends JPanel {
             navigate.execute();
             buttonPanel.remove(homeButton);
             buttonPanel.add(productsButton);
-            productsButton.setBackground(Style.Colors.SECODARY);
+            productsButton.setBackground(Style.Colors.SECONDARY);
             buttonPanel.revalidate();
             buttonPanel.repaint();
         });
