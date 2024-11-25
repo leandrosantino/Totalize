@@ -1,7 +1,6 @@
 package com.totalize;
 
 import java.awt.BorderLayout;
-import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,9 +13,9 @@ public class App {
 
     private static final JPanel home = new Home();
     private static final ProductsView products = new ProductsView();
-    int i;
 
-    public static void main(String[] args) throws SQLException {
+
+    public static void main(String[] args) {
         startWindow();
     }
 
