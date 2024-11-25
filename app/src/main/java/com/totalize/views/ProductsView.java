@@ -2,6 +2,11 @@ package com.totalize.views;
 
 import com.totalize.models.product.Product;
 import com.totalize.models.product.ProductDAO;
+import com.totalize.views.components.Buttons.Button;
+import com.totalize.views.components.Buttons.ButtonType;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignD;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,11 +15,11 @@ import java.util.List;
 
 public class ProductsView extends JPanel {
 
-    private JTextField txtBarcode;
-    private JTextField txtDescription;
-    private JTextField txtPrice;
-    private JTable productTable;
-    private DefaultTableModel tableModel;
+    private final JTextField txtBarcode;
+    private final JTextField txtDescription;
+    private final JTextField txtPrice;
+    private final JTable productTable;
+    private final DefaultTableModel tableModel;
     private int selectedProductId = -1; // Armazena o ID do produto selecionado para edição
 
     public ProductsView() {
@@ -26,22 +31,20 @@ public class ProductsView extends JPanel {
         txtDescription = new JTextField(20);
         txtPrice = new JTextField(10);
 
-        JButton btnSave = new JButton("SALVAR");
-        btnSave.setBackground(Color.GREEN);
-        btnSave.setForeground(Color.BLACK);
+        JButton btnSave = new Button("Salvar", 80, 30, ButtonType.Success, MaterialDesignC.CONTENT_SAVE);
         btnSave.setFocusPainted(false);
         btnSave.addActionListener(e -> saveOrUpdateProduct()); // Altera o método do botão Salvar para salvar ou atualizar
 
-        JButton btnEdit = new JButton("EDITAR"); // Novo botão de edição
-        btnEdit.setBackground(Color.ORANGE);
-        btnEdit.setForeground(Color.BLACK);
+        JButton btnEdit = new Button("Editar", 80, 30, ButtonType.Secondary, MaterialDesignP.PENCIL);
+//        btnEdit.setBackground(Color.ORANGE);
+        btnEdit.setFont(new Font("Arial", Font.BOLD, 12));
         btnEdit.setFocusPainted(false);
         btnEdit.addActionListener(e -> loadSelectedProduct());
         btnEdit.setEnabled(false); // Inicialmente desabilitado até que um produto seja selecionado
 
-        JButton btnDelete = new JButton("EXCLUIR");
+        Button btnDelete = new Button("Excluir", 80, 30, ButtonType.Primary, MaterialDesignD.DELETE_OUTLINE);
         btnDelete.setBackground(Color.RED);
-        btnDelete.setForeground(Color.BLACK);
+        btnDelete.setFont(new Font("Arial", Font.BOLD, 12));
         btnDelete.setFocusPainted(false);
         btnDelete.addActionListener(e -> deleteSelectedProduct());
 
@@ -73,7 +76,7 @@ public class ProductsView extends JPanel {
 
         // Adicionando componentes ao painel de entrada
         JPanel inputPanel = new JPanel();
-        btnSave.setBackground(new Color(211, 211, 211)); 
+//        btnSave.setBackground(new Color(211, 211, 211));
         inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         inputPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
@@ -95,7 +98,7 @@ public class ProductsView extends JPanel {
         loadProducts();
     }
 
-    // Método para carregar produtos na tabela
+    //  carregar produtos na tabela
     private void loadProducts() {
         List<Product> products = ProductDAO.getAll();
         tableModel.setRowCount(0); // Limpa a tabela
@@ -110,7 +113,7 @@ public class ProductsView extends JPanel {
         }
     }
 
-    // Método para salvar ou atualizar um produto
+    //  salvar ou atualizar um produto
     private void saveOrUpdateProduct() {
         String barcode = txtBarcode.getText();
         String description = txtDescription.getText();
@@ -122,14 +125,14 @@ public class ProductsView extends JPanel {
         } else { // Atualiza produto existente
             Product product = new Product(selectedProductId, barcode, description, price);
             ProductDAO.updateProduct(product);
-            selectedProductId = -1; // Reseta o ID do produto selecionado
+            selectedProductId = -1; // Reset o ID do produto selecionado
         }
 
         clearFields(); // Limpa os campos
         loadProducts(); // Recarrega a tabela
     }
 
-    // Método para carregar o produto selecionado nos campos para edição
+    // carregar o produto selecionado nos campos para edição
     private void loadSelectedProduct() {
         int selectedRow = productTable.getSelectedRow();
         if (selectedRow >= 0) {
@@ -140,7 +143,7 @@ public class ProductsView extends JPanel {
         }
     }
 
-    // Método para excluir o produto selecionado
+    //  excluir o produto selecionado
     private void deleteSelectedProduct() {
         int selectedRow = productTable.getSelectedRow();
         if (selectedRow >= 0) {
@@ -152,11 +155,11 @@ public class ProductsView extends JPanel {
         }
     }
 
-    // Método para limpar os campos de entrada
+    //  limpar os campos de entrada
     private void clearFields() {
         txtBarcode.setText("");
         txtDescription.setText("");
         txtPrice.setText("");
-        selectedProductId = -1; // Reseta o ID do produto selecionado
+        selectedProductId = -1; // Reset o ID do produto selecionado
     }
 }

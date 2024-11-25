@@ -35,28 +35,26 @@ import com.totalize.views.utils.Style;
 
 public class Home extends JPanel {
 
-    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+    private final NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
-    private JPanel leftPanel = new JPanel();
-    private JPanel rightPanel = new JPanel();
+    private final JPanel leftPanel = new JPanel();
+    private final JPanel rightPanel = new JPanel();
 
-    private ProductTable tableModel = new ProductTable();
+    private final ProductTable tableModel = new ProductTable();
 
-    private JTable productTable = new JTable(tableModel);
+    private final JTable productTable = new JTable(tableModel);
 
-    private Border border = new EmptyBorder(10, 10, 10, 10);
+    private final JLabel totalLabel = new JLabel("Total: R$ 0,00");
+    private final JLabel descriptionLabel = new JLabel("--------------");
 
-    private JLabel totalLabel = new JLabel("Total: R$ 0,00");
-    private JLabel descriptionLabel = new JLabel("--------------");
-
-    private JPanel totalLabelContainer = new JPanel();
-    private JPanel descriptionLabelContainer = new JPanel();
+    private final JPanel totalLabelContainer = new JPanel();
+    private final JPanel descriptionLabelContainer = new JPanel();
     private Boolean inExecution = false;
 
-    private PriceLabelComponent priceLabelComponent = new PriceLabelComponent("Valor unitário:", "R$ 0,00");
-    private PriceLabelComponent amountLabelComponent = new PriceLabelComponent("Quantidade:", "0");
-    private PriceLabelComponent subtotalLabelComponent = new PriceLabelComponent("Subtotal:", "R$ 0,00");
-    private PriceLabelComponent barcodeLabelComponent = new PriceLabelComponent("Código de barras:", "--------------");
+    private final PriceLabelComponent priceLabelComponent = new PriceLabelComponent("Valor unitário:", "R$ 0,00");
+    private final PriceLabelComponent amountLabelComponent = new PriceLabelComponent("Quantidade:", "0");
+    private final PriceLabelComponent subtotalLabelComponent = new PriceLabelComponent("Subtotal:", "R$ 0,00");
+    private final PriceLabelComponent barcodeLabelComponent = new PriceLabelComponent("Código de barras:", "--------------");
 
     public Home() {
         setLayout(new GridLayout(1, 2));
@@ -64,6 +62,7 @@ public class Home extends JPanel {
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         leftPanel.setBackground(Style.Colors.LIGHT_GRAY);
 
+        Border border = new EmptyBorder(10, 10, 10, 10);
         leftPanel.setBorder(border);
         rightPanel.setBorder(border);
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
@@ -74,9 +73,7 @@ public class Home extends JPanel {
         createLeftPanel();
         createRightPanel();
 
-        Supplier<Boolean> canExecute = () -> {
-            return !inExecution;
-        };
+        Supplier<Boolean> canExecute = () -> !inExecution;
 
         setFocusable(true);
         new GlobalScannerListener(barcode -> {
@@ -91,18 +88,14 @@ public class Home extends JPanel {
             }
 
             Integer amount = 0;
-            while (amount <= 0) {
-                try {
-                    String input = JOptionPane.showInputDialog(this, "Digite a quantidade de item:", "1");
-                    if (input == null) {
-                        inExecution = false;
-                        return;
-                    }
-                    amount = Integer.parseInt(input);
-                    break;
-                } catch (NumberFormatException e) {
-                    continue;
+            while (amount <= 0) try {
+                String input = JOptionPane.showInputDialog(this, "Digite a quantidade de item:", "1");
+                if (input == null) {
+                    inExecution = false;
+                    return;
                 }
+                amount = Integer.parseInt(input);
+            } catch (NumberFormatException ignored) {
             }
 
             PurchasedProduct purchasedProduct = new PurchasedProduct(product, amount);
@@ -110,23 +103,23 @@ public class Home extends JPanel {
 
             descriptionLabel.setText(product.getDescription());
             totalLabel.setText("Total: " + calculateTotal());
-            priceLabelComponent.getValueLabel().setText(formatToCurrence(product.getPrice()));
+            priceLabelComponent.getValueLabel().setText(formatToCurrency(product.getPrice()));
             amountLabelComponent.getValueLabel().setText(amount.toString());
-            subtotalLabelComponent.getValueLabel().setText(formatToCurrence(product.getPrice() * amount));
+            subtotalLabelComponent.getValueLabel().setText(formatToCurrency(product.getPrice() * amount));
             barcodeLabelComponent.getValueLabel().setText(barcode);
             inExecution = false;
         }, canExecute);
     }
 
     private String calculateTotal() {
-        Integer accumulate = 0;
+        int accumulate = 0;
         for (PurchasedProduct product : tableModel.getList()) {
             accumulate += product.getPrice() * product.getAmount();
         }
-        return formatToCurrence(accumulate);
+        return formatToCurrency(accumulate);
     }
 
-    private String formatToCurrence(Integer value) {
+    private String formatToCurrency(Integer value) {
         Float total = Float.parseFloat(value.toString()) / 100f;
         return numberFormat.format(total);
     }
@@ -168,7 +161,7 @@ public class Home extends JPanel {
             }
 
             JOptionPane.showMessageDialog(this,
-                    "Compra finalizada com sucesso! \n Aguarde a Emição da nota!");
+                    "Compra finalizada com sucesso! \n Aguarde a Emissão da nota!");
             descriptionLabel.setText("--------------");
             totalLabel.setText("Total: R$ 0,00");
             priceLabelComponent.getValueLabel().setText("R$ 0,00");

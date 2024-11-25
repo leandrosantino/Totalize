@@ -1,34 +1,60 @@
 # Totalize
 
-## Padrão de Commits
+**O Totalize** é um sistema de caixa desenvolvido em **Java Swing**, com integração a um banco de dados **SQLite**, projetado para atender pequenos varejos. O objetivo é modernizar e otimizar o controle de vendas e estoque de forma prática e eficiente.
 
-```
-type(scope): !subject <br>
-<!body> <br>
-```
+---
 
-- **Type (tipo)**:
-    * O tipo de modificação que foi realizada no projeto
-- **Scope (escopo)**:
-    * A região (pasta, arquivo, ou feature) do projeto onde foi realizada a modificação. <br>
-    *Obs: Para mudanças que afetam todo o projeto não é necessário informar o escopo.*
-- **Subject (asunto)**:
-    * Uma descrição curta da modificação realizada.
-- **Body (corpo)** {opcional}:
-    * Uma descrição detalhada da modificação realizada
+## 📋 **Características do Projeto**
 
-### Tipo de Commit do projeto:
-- `feat` : indica o desenvolvimento de uma nova funcionalidade ao projeto. <br>
-**Exemplo**: Acréscimo de um serviço, funcionalidade, endpoint, etc.
+- **Interface Gráfica:** Simples, intuitiva e funcional, desenvolvida com **Java Swing**.
+- **Banco de Dados Integrado:** Gerenciamento de estoque, transações e cadastro de produtos.
+- **Desempenho e Acessibilidade:** Sistema ágil para operadores e clientes, garantindo uma experiência otimizada.
 
-- `refactor`: usado quando houver uma refatoração de código que não tenha qualquer tipo de impacto na lógica/regras de negócio do sistema. <br>
-**Exemplo**: Mudanças de código após um code review
+---
 
-- `fix`: utilizado quando há correção de erros que estão gerando bugs no sistema. <br>
-**Exemplo**: Aplicar tratativa para uma função que não está tendo o comportamento esperado e retornando erro.
+## 🚀 **Tecnologias Utilizadas**
 
-- `style`: empregado quando há mudanças de formatação e estilo do código que não alteram o sistema de nenhuma forma. <br>
-**Exemplo**: Arrumar indentações, remover espaços em brancos, remover comentários, etc..
+- **Java**: Linguagem principal para o desenvolvimento da aplicação.
+- **Swing**: Biblioteca gráfica para construção da interface do usuário.
+- **SQLite**: Banco de dados leve para armazenar informações de produtos, vendas e transações.
 
-- `chore`: indica mudanças no projeto que não afetem o sistema ou arquivos de testes. São mudanças de desenvolvimento. <br>
-**Exemplo**: Mudar regras do eslint, adicionar prettier, adicionar mais extensões de arquivos ao .gitignore, modificar estrutura de pastas.
+---
+
+## 📝 **Metodologia**
+
+- **Desenvolvimento Ágil:** Realizamos reuniões semanais para alinhar objetivos e implementar melhorias iterativas.
+- **Feedback Contínuo:** Testes e ajustes foram feitos com base no feedback da equipe, garantindo uma experiência final fluida e acessível.
+
+---
+
+## 📂 **Documentos do Trabalho**
+
+Todos os documentos relacionados à entrega do trabalho estão disponíveis na pasta [**docs**](./docs). Abaixo, os materiais principais:
+
+- [**Roteiro de Extensão**](./docs/roteiro-de-extensao.pdf)
+- [**Banner**](./docs/banner.jpg)
+
+## 📦 **Como Executar o Projeto**
+
+1. **Clonar o repositório**:
+   ```bash
+   git clone https://github.com/leandrosantino/Totalize.git
+   ```
+2. **Configurar o ambiente**:
+  - Certifique-se de ter o **JDK** instalado (versão 17).
+
+3. **Compilar e executar**:
+  - Certifique-se de estar na pasta raiz do projeto e execute o seguinte código:
+   ```bash
+    ./gradlew run
+   ```
+
+---
+
+## 👥 **Equipe**
+
+- **Andrey Francisco**
+- **Edmauro Oliveira**
+- **Geovana Moura**
+- **Leandro Santino**  
+- **Maria Gabriella**

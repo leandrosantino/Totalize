@@ -3,9 +3,10 @@ package com.totalize.models.product;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 public class PurchasedProduct extends Product {
-    @Setter
-    @Getter
+
     private Integer amount;
 
     public PurchasedProduct(Product product, Integer amount) {

@@ -13,9 +13,9 @@ import com.totalize.models.product.PurchasedProduct;
 
 public class PurchaseDAO {
 
-    private static Connection conn = Database.connect();
+    private static final Connection conn = Database.connect();
 
-    public static List<Purchase> getALl() {
+    public static List<Purchase> getAll() {
         List<Purchase> purchases = new ArrayList<>();
 
         String sql = "SELECT purchase_id, CPF, total_price, purchase_date FROM purchase";
@@ -65,10 +65,8 @@ public class PurchaseDAO {
 
     public static void create(Purchase purchase) throws SQLException {
 
-        String createPurchaseSql = "" +
-                "INSERT INTO purchase (CPF, total_price, purchase_date) VALUES (?, ?, ?)";
-        String connectProductsSql = "" +
-                "INSERT INTO purchased_products (product_id, purchase_id, amount) VALUES (?, ?, ?)";
+        String createPurchaseSql = "INSERT INTO purchase (CPF, total_price, purchase_date) VALUES (?, ?, ?)";
+        String connectProductsSql = "INSERT INTO purchased_products (product_id, purchase_id, amount) VALUES (?, ?, ?)";
 
         try {
             PreparedStatement purchaseStmt = conn.prepareStatement(createPurchaseSql);

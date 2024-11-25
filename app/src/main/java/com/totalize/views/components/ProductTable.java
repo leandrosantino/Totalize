@@ -11,8 +11,8 @@ import com.totalize.models.product.PurchasedProduct;
 
 public class ProductTable extends AbstractTableModel {
 
-    private List<PurchasedProduct> products;
-    private String[] colunas = { "Código", "Descrição", "Qtd.", "Valor" };
+    private final List<PurchasedProduct> products;
+    private final String[] colunas = { "Código", "Descrição", "Qtd.", "Valor" };
 
     public ProductTable() {
         products = new ArrayList<>();
@@ -70,22 +70,17 @@ public class ProductTable extends AbstractTableModel {
         Locale brasil = new Locale("pt", "BR");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(brasil);
 
-        Integer totalPrice = product.getPrice() * product.getAmount();
+        int totalPrice = product.getPrice() * product.getAmount();
 
-        Float price = Float.parseFloat(totalPrice.toString()) / 100f;
+        Float price = Float.parseFloat(Integer.toString(totalPrice)) / 100f;
 
-        switch (columnIndex) {
-            case 0:
-                return product.getBarcode();
-            case 1:
-                return product.getDescription();
-            case 2:
-                return product.getAmount();
-            case 3:
-                return numberFormat.format(price);
-            default:
-                return null;
-        }
+        return switch (columnIndex) {
+            case 0 -> product.getBarcode();
+            case 1 -> product.getDescription();
+            case 2 -> product.getAmount();
+            case 3 -> numberFormat.format(price);
+            default -> null;
+        };
     }
 
 }
